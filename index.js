@@ -25,12 +25,16 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", function(req, res, next){
-  let date = req.params.date
-  console.log(date)
+  req.date = req.params.date;
+  console.log(req.date)
   next()},
   (req,res, next) => {
-      console.log("succes")
+    let date = new Date(req.date);
+    let unix = Math.floor(date.getTime())
+    let formatted = date.toGMTString();
+    res.json({"unix" : unix, "utc" : formatted})
   })
+
 
 
 // listen for requests :)
